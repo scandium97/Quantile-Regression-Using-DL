@@ -103,21 +103,21 @@ class cdf_reg_model:
     def _predict(self):
         tmp = []
         for i in range(len(self.quan_out)):
-        tmp.append(self.quan_out[i]*self.prob_w[i])
+            tmp.append(self.quan_out[i]*self.prob_w[i])
         self.pred = tf.reduce_sum(tmp,axis=0)/sum(self.prob_w)
         return self.pred
 
     def init_variables(self,saved=False):
         if saved==False:
-        self.sess.run(tf.global_variables_initializer())
-        print("global_variables_initialize!!!")
+            self.sess.run(tf.global_variables_initializer())
+            print("global_variables_initialize!!!")
         else:
-        try:
-            model_file = tf.train.latest_checkpoint(self.save_path)
-            self.saver.restore(self.sess,model_file)
-            print("The saved model has been restored!!!!")
-        except:
-            raise IOError("IO failed! \n **Check your save path! ! !**")
+            try:
+                model_file = tf.train.latest_checkpoint(self.save_path)
+                self.saver.restore(self.sess,model_file)
+                print("The saved model has been restored!!!!")
+            except:
+                raise IOError("IO failed! \n **Check your save path! ! !**")
         return
 
 
@@ -151,8 +151,8 @@ class cdf_reg_model:
         x,y: ndarray, shape is same to  self.fit()
         """
         if self.isTraining == False:
-        print("You can't vaildate model while not trainning !")
-        return 
+            print("You can't vaildate model while not trainning !")
+            return 
         loss = self.sess.run(self.loss,{self.x:x,self.y:y})
         return loss
 
